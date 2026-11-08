@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentrix Link 소개 · 홈 시안</title>
+<style>
+:root {
+  --paper: #ffffff;
+  --canvas: #f5f5f7;
+  --ink: #131d30;
+  --ink-2: #384152;
+  --muted: #5d6472;
+  --faint: #8a909b;
+  --line: #e7e6e2;
+  --accent: #ff6b00;
+  --accent-ink: #b64000;
+  --accent-soft: #fff2e8;
+  --font: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Noto Sans KR', system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; word-break: keep-all; font-family: var(--font); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+.v-b body, body.v-b { background: var(--canvas); }
+
+/* 슬라이드 한 장 = 화면 하나, 생각 하나 */
+.slide { min-height: 100dvh; display: grid; place-items: center; padding: 96px max(24px, 6vw); position: relative; }
+.slide > .in { width: min(1180px, 100%); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px; }
+.kick { font-size: 17px; font-weight: 700; color: var(--accent-ink); letter-spacing: -0.01em; }
+h1, h2 { margin: 0; letter-spacing: -0.035em; text-wrap: balance; }
+h1 { font-size: clamp(44px, 6.4vw, 96px); line-height: 1.08; font-weight: 800; }
+h2 { font-size: clamp(36px, 4.6vw, 72px); line-height: 1.12; font-weight: 800; }
+.lead { margin: 0; font-size: clamp(18px, 1.6vw, 24px); line-height: 1.6; color: var(--muted); max-width: 46ch; text-wrap: balance; }
+.lead b { color: var(--ink); }
+.src { font-size: 13px; color: var(--faint); margin: 0; }
+.o { color: var(--accent); }
+
+/* 손으로 그린 듯한 알약 도식 */
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 0 28px; height: 64px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; font-size: 22px; font-weight: 800; white-space: nowrap; }
+.pill img { width: 26px; height: 26px; border-radius: 6px; }
+.pill.hot { background: var(--accent); color: #fff; border-color: var(--ink); }
+.pill.soft { border-style: dashed; border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+
+/* 1. 첫 장 */
+.hero-trio { display: flex; align-items: center; gap: 0; margin-top: 20px; }
+.hero-trio .pill { height: 76px; font-size: 24px; }
+.hero-trio .wire { width: 72px; height: 3px; background: var(--ink); transform-origin: left; }
+.scroll-cue { position: absolute; bottom: 32px; left: 50%; translate: -50% 0; font-size: 14px; color: var(--faint); }
+
+/* 2. 시장 구조 */
+.chain { position: relative; width: 100%; max-width: 1100px; }
+.chain-row { display: flex; justify-content: space-between; gap: 8px; position: relative; z-index: 1; }
+.chain-row .pill { font-size: 19px; padding: 0 20px; height: 58px; }
+.chain svg { position: absolute; left: 0; top: 0; width: 100%; height: 170px; overflow: visible; }
+.chain-note { display: flex; gap: 14px; justify-content: center; margin-top: 150px; flex-wrap: wrap; }
+.chain-note .pill { height: 54px; font-size: 19px; }
+
+/* 3. 큰 숫자 */
+.bignums { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 48px; width: 100%; max-width: 980px; }
+.bignum { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.bignum strong { font-size: clamp(88px, 11vw, 168px); line-height: 0.95; font-weight: 800; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.bignum > span { font-size: 19px; color: var(--muted); font-weight: 600; }
+.bignums .vs { font-size: 28px; color: var(--faint); font-weight: 700; padding-bottom: 70px; }
+.people { display: flex; flex-wrap: wrap; gap: 5px; width: 100%; max-width: 980px; justify-content: center; }
+.people i { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+.people i.x { background: transparent; box-shadow: inset 0 0 0 2px var(--accent); }
+
+/* 4. 그래프 */
+.chart { width: 100%; max-width: 980px; display: grid; gap: 22px; text-align: left; }
+.bar-row { display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 20px; }
+.bar-row > b { font-size: 18px; }
+.bar-row > b small { display: block; font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 4px; }
+.track { height: 64px; border-radius: 16px; background: #f1f1ef; position: relative; overflow: hidden; }
+.fill { position: absolute; inset: 0 auto 0 0; border-radius: 16px; background: var(--ink); display: flex; align-items: center; justify-content: flex-end; padding-right: 20px; color: #fff; font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; transform-origin: left; }
+.fill.o { background: var(--accent); }
+
+/* 5. 일당 */
+.wage { width: 100%; max-width: 980px; display: grid; gap: 18px; }
+.wage .track { height: 88px; }
+.wage .fill { font-size: 28px; }
+.wage .gap { position: absolute; inset: 0 0 0 auto; display: flex; align-items: center; justify-content: center; color: var(--accent-ink); font-weight: 800; font-size: 20px; background: repeating-linear-gradient(135deg, var(--accent-soft) 0 12px, #fff 12px 24px); border-left: 3px dashed var(--accent); }
+
+/* 6. 효과 */
+.effects-a { display: grid; gap: 0; width: 100%; max-width: 1080px; }
+.eff { display: grid; grid-template-columns: 1fr 64px 1fr; align-items: center; gap: 24px; padding: 34px 0; border-top: 1px solid var(--line); text-align: left; }
+.eff:last-child { border-bottom: 1px solid var(--line); }
+.eff .before { font-size: clamp(22px, 2.2vw, 32px); font-weight: 700; color: var(--faint); text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #c9c9c4; }
+.eff .after { font-size: clamp(22px, 2.2vw, 32px); font-weight: 800; }
+.eff .after small { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: var(--muted); margin-top: 8px; }
+.eff .after small img { width: 18px; height: 18px; border-radius: 4px; }
+.eff svg { width: 64px; height: 24px; }
+
+.bento { display: none; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1180px; text-align: center; }
+.card { background: #fff; border-radius: 28px; padding: 40px 32px; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.card .cap { font-size: 17px; color: var(--muted); font-weight: 600; line-height: 1.5; }
+.card .cap b { color: var(--ink); }
+.card .num { font-size: clamp(52px, 5vw, 80px); line-height: 1; font-weight: 800; letter-spacing: -0.04em; }
+.card .num small { font-size: 0.5em; }
+.card .num.t { font-size: clamp(36px, 3.2vw, 50px); line-height: 1.15; }
+.card .strike { font-size: 22px; color: var(--faint); text-decoration: line-through; font-weight: 700; }
+.card .mark { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+.card .mark img { width: 18px; height: 18px; border-radius: 4px; }
+.card.wide { grid-column: span 2; }
+.card .stars { display: flex; gap: 6px; }
+.card .stars svg { width: 34px; height: 34px; }
+
+/* 7. 순환 */
+.loop { position: relative; width: min(760px, 100%); aspect-ratio: 1.5; }
+.loop svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.loop .pill { position: absolute; translate: -50% -50%; height: 54px; font-size: 18px; padding: 0 18px; }
+.loop .center { position: absolute; left: 50%; top: 50%; translate: -50% -50%; font-size: 22px; font-weight: 800; line-height: 1.4; }
+.loop .center small { display: block; font-size: 15px; color: var(--muted); font-weight: 600; }
+
+/* 8. 일정 */
+.road { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; max-width: 1080px; position: relative; }
+.road::before { content: ''; position: absolute; left: 16%; right: 16%; top: 31px; height: 3px; background: var(--ink); }
+.road div { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; }
+.road .dot { width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--ink); background: #fff; display: grid; place-items: center; font-weight: 800; }
+.road .dot.on { background: var(--accent); color: #fff; }
+.road b { font-size: 22px; }
+.road span { font-size: 16px; color: var(--muted); line-height: 1.5; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.cta a { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 22px; border-radius: 999px; border: 2px solid var(--ink); font-weight: 800; color: var(--ink); text-decoration: none; font-size: 16px; background: #fff; }
+.cta a.p { background: var(--accent); border-color: var(--accent); color: #fff; }
+.cta a img { width: 20px; height: 20px; border-radius: 5px; }
+
+/* 변형 B: 지표 카드 */
+.v-b .slide.grey { background: var(--canvas); }
+.v-b .effects-a { display: none; }
+.v-b .bento { display: grid; }
+.v-b .slide.effects > .in { align-items: stretch; }
+.v-b .slide.effects .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; text-align: left; }
+
+/* 등장 모션: 원인 → 결과 순서만 보여 줌 */
+.rv { opacity: 0; translate: 0 24px; transition: opacity .7s cubic-bezier(.2,.7,.2,1), translate .7s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--d, 0) * 120ms); }
+.on .rv { opacity: 1; translate: 0 0; }
+.grow { transform: scaleX(0); transition: transform 1.1s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--d, 0) * 160ms + 200ms); }
+.on .grow { transform: scaleX(1); }
+.draw { stroke-dasharray: var(--len, 1200); stroke-dashoffset: var(--len, 1200); transition: stroke-dashoffset 1.4s cubic-bezier(.4,.1,.2,1) .3s; }
+.on .draw { stroke-dashoffset: 0; }
+.pop { scale: .6; opacity: 0; transition: scale .5s cubic-bezier(.3,1.6,.5,1), opacity .3s; transition-delay: calc(var(--d, 0) * 90ms + 900ms); }
+.on .pop { scale: 1; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .rv, .grow, .draw, .pop { transition: none; opacity: 1; translate: none; transform: none; scale: 1; stroke-dashoffset: 0; }
+}
+
+@media (max-width: 760px) {
+  .slide { padding: 72px 20px; min-height: auto; }
+  .pill { font-size: 17px; height: 50px; padding: 0 18px; }
+  .hero-trio { flex-direction: column; }
+  .scroll-cue { display: none; }
+  .hero-trio .wire { width: 3px; height: 28px; }
+  .chain-row { flex-direction: column; align-items: center; gap: 14px; }
+  .chain svg { display: none; }
+  .chain-note { margin-top: 32px; }
+  .bignums { grid-template-columns: 1fr; gap: 28px; }
+  .bignums .vs { padding: 0; }
+  .bar-row { grid-template-columns: 1fr; gap: 8px; }
+  .eff { grid-template-columns: 1fr; gap: 8px; }
+  .eff svg { rotate: 90deg; }
+  .bento { grid-template-columns: 1fr; }
+  .card.wide { grid-column: auto; }
+  .loop { aspect-ratio: auto; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .loop svg.ring, .loop .center { display: none; }
+  .loop .pill { position: static; translate: none; }
+  .road { grid-template-columns: 1fr; gap: 28px; }
+  .road::before { display: none; }
+  .v-b .slide.effects .head { flex-direction: column; align-items: start; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide" id="s1">
+  <div class="in">
+    <p class="kick rv">Sentrix Link</p>
+    <h1 class="rv" style="--d:1">보안 현장의 기록이<br><span class="o">다음 채용</span>의 근거가 됩니다.</h1>
+    <p class="lead rv" style="--d:2">사건 · 인력 관리부터 근무 평가로 믿고 뽑는 채용까지, 한 계정으로 잇는 보안 인력 플랫폼입니다.</p>
+    <div class="hero-trio">
+      <span class="pill rv" style="--d:3"><img src="sentrix-mark.png" alt="">Sentrix</span>
+      <span class="wire grow" style="--d:4"></span>
+      <span class="pill rv" style="--d:5"><img src="hr-mark.png" alt="">Sentrix HR</span>
+      <span class="wire grow" style="--d:6"></span>
+      <span class="pill hot rv" style="--d:7"><img src="cp-mark.png" alt="">씨피(CP)</span>
+    </div>
+  </div>
+  <p class="scroll-cue">아래로 넘기기</p>
+</section>
+
+<!-- 2 -->
+<section class="slide grey" id="s2">
+  <div class="in">
+    <h2 class="rv">한 현장에 다섯 단계가<br>사람을 보냅니다.</h2>
+    <p class="lead rv" style="--d:1">발주처가 경비업체에 맡긴 현장의 모자란 인원을 협력업체 · 프리랜서 팀이 단기 근무자로 채웁니다.</p>
+    <div class="chain">
+      <div class="chain-row">
+        <span class="pill rv" style="--d:2">발주처</span>
+        <span class="pill rv" style="--d:3">경비업체</span>
+        <span class="pill rv" style="--d:4">협력업체</span>
+        <span class="pill rv" style="--d:5">프리랜서 팀</span>
+        <span class="pill hot rv" style="--d:6">단기 근무자</span>
+      </div>
+      <svg viewBox="0 0 1100 200" preserveAspectRatio="none" aria-hidden="true">
+        <path class="draw" style="--len:1300" d="M70 58 C 70 190, 1030 190, 1030 58" fill="none" stroke="#131d30" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      <div class="chain-note">
+        <span class="pill soft pop" style="--d:0">단톡방</span>
+        <span class="pill soft pop" style="--d:1">엑셀</span>
+        <span class="pill soft pop" style="--d:2">구인방</span>
+      </div>
+    </div>
+    <p class="lead rv" style="--d:7">단계를 거칠수록 <b>소속이 섞인 인력</b>이 들어오고, 기록은 세 곳으로 흩어집니다.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" id="s3">
+  <div class="in">
+    <h2 class="rv">팀장 한 명이 매일 맞추는 명단</h2>
+    <div class="bignums">
+      <div class="bignum rv" style="--d:1"><strong data-count="40">40</strong><span>내부 근무자</span></div>
+      <div class="vs rv" style="--d:2">+</div>
+      <div class="bignum rv" style="--d:3"><strong><span class="o" data-count="100">100</span>+</strong><span>거의 매일 바뀌는 외부 지원근무자</span></div>
+    </div>
+    <div class="people" id="people" aria-hidden="true"></div>
+    <p class="lead rv" style="--d:4">보안 현장 팀장으로 2년 동안 두 사이트를 맡으며 겪은 숫자입니다. 교체 명단은 단톡방 캡처로 오고, 출근한 사람과 다시 대조합니다.</p>
+    <p class="src">대표자 현장 경험 기준</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide grey" id="s4">
+  <div class="in">
+    <h2 class="rv">급구는 지금도<br>구인방에서 올라옵니다.</h2>
+    <div class="chart">
+      <div class="bar-row rv" style="--d:1"><b>구인방 2곳<small>12일 실측</small></b><div class="track"><div class="fill o grow" style="width:52.8%;--d:1">531건</div></div></div>
+      <div class="bar-row rv" style="--d:2"><b>구인 사이트<small>수도권 7일 실측</small></b><div class="track"><div class="fill grow" style="width:58.3%;--d:2">586건</div></div></div>
+      <div class="bar-row rv" style="--d:3"><b>1년으로 환산<small>구인 사이트 기준</small></b><div class="track"><div class="fill grow" style="width:100%;--d:3">30,556건</div></div></div>
+    </div>
+    <p class="lead rv" style="--d:4">공고는 많지만 근무일 · 일급 · 도착 조건이 글마다 다르고, 근무가 끝난 뒤 평가는 남지 않습니다.</p>
+    <p class="src">구인방 2곳 2026.10.22~11.2, 알바몬 539건 + 사람인 47건 2026.11.1~7(경비 · 경호 · 보안요원 검색, 채널 간 중복 일부 포함)</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" id="s5">
+  <div class="in">
+    <h2 class="rv">10만 원이 내려오면<br><span class="o">6~7만 원</span>이 남습니다.</h2>
+    <div class="wage">
+      <div class="bar-row rv" style="--d:1"><b>업체가 지급<small>10시간</small></b><div class="track"><div class="fill grow" style="width:100%;--d:1">100,000원</div></div></div>
+      <div class="bar-row rv" style="--d:2"><b>팀원이 받음<small>같은 10시간</small></b><div class="track"><div class="fill o grow" style="width:65%;--d:2">60,000~70,000원</div><div class="gap pop" style="width:35%;--d:3">중간에서 빠짐</div></div></div>
+    </div>
+    <p class="lead rv" style="--d:3">단계가 많을수록 근무자 몫은 줄고, 누가 일했는지는 흐려집니다.</p>
+    <p class="src">경호업체 대표 인터뷰, 일생활균형연구소 「청년프리랜서 행사 경호 · 경비원들의 노동실태조사」(2020, N=116)</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide grey effects" id="s6">
+  <div class="in">
+    <div class="head">
+      <h2 class="rv">Sentrix Link를 쓰면<br>이렇게 바뀝니다.</h2>
+      <p class="lead rv" style="--d:1">지금 쓰는 방식과 바뀐 뒤를 나란히 봅니다.</p>
+    </div>
+    <div class="effects-a">
+      <div class="eff rv" style="--d:1"><span class="before">단톡방에 흘러간 사건 보고</span><svg viewBox="0 0 64 24"><path d="M2 12h56m-8-8 8 8-8 8" fill="none" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="after">답만 골라 올리는 사건 보고, 상황실에 바로 접수<small><img src="sentrix-mark.png" alt="">Sentrix</small></span></div>
+      <div class="eff rv" style="--d:2"><span class="before">교체 명단 캡처 · 출근 대조 하루 15~20분</span><svg viewBox="0 0 64 24"><path d="M2 12h56m-8-8 8 8-8 8" fill="none" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="after">확정 명단이 팀장 앱에 바로<small><img src="sentrix-mark.png" alt="">Sentrix 지원 요청 · 승인</small></span></div>
+      <div class="eff rv" style="--d:3"><span class="before">월말 근무 시트 정리 1~2시간</span><svg viewBox="0 0 64 24"><path d="M2 12h56m-8-8 8 8-8 8" fill="none" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="after">근무 기록으로 정산 엑셀이 채워짐<small><img src="hr-mark.png" alt="">Sentrix HR Finance</small></span></div>
+      <div class="eff rv" style="--d:4"><span class="before">구인방에 글 올리고 전화로 확인</span><svg viewBox="0 0 64 24"><path d="M2 12h56m-8-8 8 8-8 8" fill="none" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="after">근무일 · 일급 · 도착 조건이 정해진 급구 공고<small><img src="cp-mark.png" alt="">씨피 급구</small></span></div>
+      <div class="eff rv" style="--d:5"><span class="before">처음 온 사람은 소개받은 말뿐</span><svg viewBox="0 0 64 24"><path d="M2 12h56m-8-8 8 8-8 8" fill="none" stroke="#ff6b00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="after">지난 근무 평가 · 근무 횟수로 비교해 확정<small><img src="cp-mark.png" alt="">씨피 평가</small></span></div>
+    </div>
+    <div class="bento">
+      <div class="card rv" style="--d:1"><span class="cap">하루 명단 대조</span><span class="strike">15~20분</span><span class="num t">확정 명단<br>바로 반영</span><span class="mark"><img src="sentrix-mark.png" alt="">Sentrix 지원 요청</span></div>
+      <div class="card rv" style="--d:2"><span class="cap">월말 근무 시트 정리</span><span class="strike">1~2시간</span><span class="num t">정산 엑셀<br>자동 작성</span><span class="mark"><img src="hr-mark.png" alt="">Sentrix HR Finance</span></div>
+      <div class="card rv" style="--d:3"><span class="cap">사건 보고</span><span class="num">9<small>단계</small></span><span class="cap">질문에 <b>답만 고르면</b><br>보고 문장이 만들어집니다</span><span class="mark"><img src="sentrix-mark.png" alt="">Sentrix 간편보고</span></div>
+      <div class="card wide rv" style="--d:4"><span class="cap">급구 공고에서 확정까지</span><span class="num" style="font-size:clamp(40px,4vw,60px)">공고 <span class="o">→</span> 비교 <span class="o">→</span> 확정 <span class="o">→</span> 평가</span><span class="cap">근무가 끝나면 <b>평가가 쌓이고</b>, 다음 급구에서 그 평가로 고릅니다</span><span class="mark"><img src="cp-mark.png" alt="">씨피(CP)</span></div>
+      <div class="card rv" style="--d:5"><span class="cap">다시 가입</span><span class="num">0<small>번</small></span><span class="cap">출퇴근 계정 그대로<br><b>씨피 일자리</b>에 지원</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" id="s7">
+  <div class="in">
+    <h2 class="rv">한 번의 급구가<br>다음 채용의 근거로 돌아옵니다.</h2>
+    <div class="loop">
+      <svg class="ring" viewBox="0 0 760 506" aria-hidden="true">
+        <ellipse class="draw" style="--len:2000" cx="380" cy="253" rx="300" ry="190" fill="none" stroke="#131d30" stroke-width="3" />
+        <circle r="10" fill="#ff6b00"><animateMotion dur="9s" repeatCount="indefinite" path="M380 63 a300 190 0 1 1 -0.1 0" /></circle>
+      </svg>
+      <span class="pill rv" style="left:50%;top:12.5%;--d:1"><img src="sentrix-mark.png" alt="">지원 인력 요청</span>
+      <span class="pill rv" style="left:86%;top:32%;--d:2"><img src="cp-mark.png" alt="">급구 공고</span>
+      <span class="pill hot rv" style="left:86%;top:68%;--d:3"><img src="cp-mark.png" alt="">평가 보고 확정</span>
+      <span class="pill rv" style="left:50%;top:87.5%;--d:4"><img src="sentrix-mark.png" alt="">팀장 앱에 명단</span>
+      <span class="pill rv" style="left:14%;top:68%;--d:5"><img src="hr-mark.png" alt="">출퇴근 · 잔업 기록</span>
+      <span class="pill rv" style="left:14%;top:32%;--d:6"><img src="hr-mark.png" alt="">월말 정산</span>
+      <p class="center rv" style="--d:7">한 계정<small>같은 직원 명단</small></p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide grey" id="s8">
+  <div class="in">
+    <h2 class="rv">지금 쓸 수 있습니다.</h2>
+    <div class="road">
+      <div class="rv" style="--d:1"><span class="dot on"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><b>지금</b><span>Sentrix · Sentrix HR 운영 중<br>도입 상담</span></div>
+      <div class="rv" style="--d:2"><span class="dot"></span><b>2027년 1~2월</b><span>씨피(CP) 출시<br>커뮤니티와 무료 공고부터</span></div>
+      <div class="rv" style="--d:3"><span class="dot"></span><b>2027년 상반기</b><span>Sentrix · Sentrix HR<br>정식 출시</span></div>
+    </div>
+    <div class="cta rv" style="--d:4">
+      <a href="#"><img src="sentrix-mark.png" alt="">Sentrix 설명서</a>
+      <a href="#"><img src="hr-mark.png" alt="">Sentrix HR 설명서</a>
+      <a href="#"><img src="cp-mark.png" alt="">씨피(CP) 설명서</a>
+      <a href="#">기능 한눈에 보기</a>
+      <a class="p" href="#">도입 문의</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  if (new URLSearchParams(location.search).get('v') === 'b') document.documentElement.classList.add('v-b');
+  // 사람 점: 내부 40(남색) + 외부 100(주황 테두리)
+  const pp = document.getElementById('people');
+  for (let i = 0; i < 140; i++) { const e = document.createElement('i'); if (i >= 40) e.className = 'x'; e.style.cssText = 'opacity:0;transition:opacity .3s ' + (i * 12) + 'ms'; pp.appendChild(e); }
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); if (e.target.id === 's3') pp.querySelectorAll('i').forEach((i) => (i.style.opacity = 1)); } }), { threshold: 0.25 });
+  document.querySelectorAll('.slide').forEach((s) => io.observe(s));
+  if (location.hash === '#all') document.querySelectorAll('.slide').forEach((s) => { s.classList.add('on'); pp.querySelectorAll('i').forEach((i) => (i.style.opacity = 1)); });
+</script>
+</body>
+</html>
